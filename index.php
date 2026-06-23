@@ -11,16 +11,16 @@ function add_wapp_btn_to_catalog_pages() {
 }
 
 function render_wapp_price_link($custom_styles = '') {
-    global $product;                                                // Pull the current active global instance array from Woocommerce. contains raw pricing data, naming, identifiers, etc.
+    global $product;                                                    // Pull the current active global instance array from Woocommerce. contains raw pricing data, naming, identifiers, etc.
 
-    if (!$product) { $product = wc_get_product(get_the_ID()); }     // Safety fallback logic.
-    if (!$product || !($product instanceof WC_Product)) { return; } // If the page loading is not a product record, rececution safely stops. "instanceof WC_Product" veirifes the variable is specifically an instance of the WC_Product class before touching it.
+    if (!$product) { $product = wc_get_product(get_the_ID()); }         // Safety fallback logic.
+    if (!$product || !($product instanceof WC_Product)) { return; }     // If the page loading is not a product record, rececution safely stops. "instanceof WC_Product" veirifes the variable is specifically an instance of the WC_Product class before touching it.
 
     $phone_number    = '59898684543';
-    if (!preg_match('/^598\d{8}$/', $phone_number)) { return; }     // Regex validation on phone number (Now harcoded but in the future might be dynamic). Uruguay country code 598 + 8 subscriber digits = 11 digits total. 
+    if (!preg_match('/^598\d{8}$/', $phone_number)) { return; }         // Regex validation on phone number (Now harcoded but in the future might be dynamic). Uruguay country code 598 + 8 subscriber digits = 11 digits total. 
 
-    $product_name    = $product->get_name();
-    $product_url     = get_permalink($product->get_id());
+    $product_name    = sanitize_text_field($product->get_name());       // Strip tags, control chars and extra whitespace from DB values.
+    $product_url     = esc_url_raw(get_permalink($product->get_id()));  // esc_url_raw() validates/cleans the URL without encoding "&" and special chars needed in URLs.
     $message         = sprintf("Hola. Quisiera consultar el precio de %s (%s)", $product_name, $product_url);
     $encoded_message = rawurlencode($message);
     $wapp_url        = "https://wa.me/{$phone_number}?text={$encoded_message}";
