@@ -17,6 +17,8 @@ function render_wapp_price_link($custom_styles = '') {
     if (!$product || !($product instanceof WC_Product)) { return; } // If the page loading is not a product record, rececution safely stops. "instanceof WC_Product" veirifes the variable is specifically an instance of the WC_Product class before touching it.
 
     $phone_number    = '59898684543';
+    if (!preg_match('/^598\d{8}$/', $phone_number)) { return; }     // Regex validation on phone number (Now harcoded but in the future might be dynamic). Uruguay country code 598 + 8 subscriber digits = 11 digits total. 
+
     $product_name    = $product->get_name();
     $product_url     = get_permalink($product->get_id());
     $message         = sprintf("Hola. Quisiera consultar el precio de %s (%s)", $product_name, $product_url);
