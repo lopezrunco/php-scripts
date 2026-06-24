@@ -21,6 +21,8 @@ function render_wapp_price_link($custom_styles = '') {
 
     $product_name    = sanitize_text_field($product->get_name());       // Strip tags, control chars and extra whitespace from DB values.
     $product_url     = esc_url_raw(get_permalink($product->get_id()));  // esc_url_raw() validates/cleans the URL without encoding "&" and special chars needed in URLs.
+    if (empty($product_name) || empty($product_url)) { return; }        // Stop if sanitization wiped out either value (Prevents a broken or empty Wapp link from rendering).
+
     $message         = sprintf("Hola. Quisiera consultar el precio de %s (%s)", $product_name, $product_url);
     $encoded_message = rawurlencode($message);
     $wapp_url        = "https://wa.me/{$phone_number}?text={$encoded_message}";
