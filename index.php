@@ -28,17 +28,29 @@ function render_wapp_price_link($context = 'single') {
     $wapp_url        = "https://wa.me/{$phone_number}?text={$encoded_message}";
 
     $allowed_contexts = [
-        'single'    => 'margin: 2rem 0;',
-        'catalog'   => 'margin: 1rem 0; justify-content: center;',
+        'single'    => 'wapp-single',
+        'catalog'   => 'wapp-catalog',
     ];
-    $safe_style = $allowed_contexts[$context] ?? '';                    // Unknown context gets empty string. Fails safe, renders without custom styles.
-
+    $context_class = $allowed_contexts[$context] ?? '';                 // Unknown context gets empty string. Fails safe, renders without custom styles.
     ?>
 
-    <div class="whatsapp-price-query" style="clear: both; display: flex; width: 100%; <?php echo esc_attr($safe_style); ?>">
-        <a href="<?php echo esc_url($wapp_url); ?>" target="_blank" rel="nofollow noopener noreferrer" style="display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; color: #25d366; font-weight: 700;" aria-label="<?php echo esc_attr(sprintf('Consultar precio de %s por WhatsApp', esc_html($product_name))); ?>">
-            <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;" aria-hidden="true"></i>    
-            <span><?php esc_html_e('Consultar precio', 'the7mk2'); ?></span>
+    <style>
+        .whatsapp-price-query                { clear: both; display: flex; width: 100%; }
+        .whatsapp-price-query.wapp-single    { margin: 2rem 0; }
+        .whatsapp-price-query.wapp-catalog   { margin: 1rem 0; justify-content: center; }
+        .whatsapp-price-query a              { display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; color: #25d366; font-weight: 700; }
+        .whatsapp-price-query a i            { font-size: 1.2rem; }
+    </style>
+
+    <div class="whatsapp-price-query <?php echo esc_attr($context_class); ?>">
+        <a 
+            href="<?php echo esc_url($wapp_url); ?>" 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            aria-label="<?php echo esc_attr(sprintf('Consultar precio de %s por WhatsApp', esc_html($product_name))); ?>"
+            >
+                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>    
+                <span><?php esc_html_e('Consultar precio', 'the7mk2'); ?></span>
         </a>
     </div>
 
