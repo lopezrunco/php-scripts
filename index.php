@@ -36,7 +36,7 @@ function render_wapp_price_link($context = 'single') {
     ?>
 
     <div class="whatsapp-price-query" style="clear: both; display: flex; width: 100%; <?php echo esc_attr($safe_style); ?>">
-        <a href="<?php echo esc_url($wapp_url); ?>" target="_blank" rel="nofollow" style="display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; color: #25d366; font-weight: 700;">
+        <a href="<?php echo esc_url($wapp_url); ?>" target="_blank" rel="nofollow noopener noreferrer" style="display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; color: #25d366; font-weight: 700;">
             <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i>    
             <span>Consultar precio</span>
         </a>
