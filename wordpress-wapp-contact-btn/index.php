@@ -1,14 +1,45 @@
 <?php
 
+add_action('customize_register', 'wapp_fixed_btn_customizer');
+function wapp_fixed_btn_customizer($wp_customize)
+{
+  // Section
+  $wp_customize->add_section('wapp_fixed_btn_section', [
+    'title'             => 'Botón de WhatsApp',
+    'priority'          => 200,
+  ]);
+
+  // Phone number setting + control.
+  $wp_customize->add_setting('wapp_phone_number', [
+    'default'           => '59800000000',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('wapp_phone_number', [
+    'label'             => 'Número de WhatsApp',
+    'section'           => 'wapp_fixed_btn_section',
+    'type'              => 'text',
+  ]);
+
+  // Message setting + control.
+  $wp_customize->add_setting('wapp_message', [
+    'default'           => 'Hola, deseo hacer una consulta...',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('wapp_message', [
+    'label'             => 'Mensaje predeterminado',
+    'section'           => 'wapp_fixed_btn_section',
+    'type'              => 'text',
+  ]);
+}
+
 function render_wapp_fixed_btn()
 {
-
-  $phone_number = '59892251334';
+  $phone_number = sanitize_text_field(get_theme_mod('wapp_phone_number', '59800000000'));
   // Regex validation on phone number. Uruguay country code 598 + 8 subscriber digits = 11 digits total.
   if (!preg_match('/^598\d{8}$/', $phone_number)) {
     return;
   }
-  $encoded_message = rawurlencode('Hola, deseo hacer una consulta…');
+  $encoded_message = rawurlencode(sanitize_text_field(get_theme_mod('wapp_message', 'Hola, deseo ahcer una consulta...')));
   $wapp_url        = "https://wa.me/{$phone_number}?text={$encoded_message}";
 
 ?>
