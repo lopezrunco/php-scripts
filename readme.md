@@ -18,6 +18,10 @@ Adds a "Ask price" link on individual product pages and catalog listings. Phone 
 
 Adds a fixed Whatsapp contact button in the bottom-right corner of every page. Phone number and message are configurable from the Wordpress admin. Run it with the Code Snippets WordPress plugin.
 
+3. `woocommerce-change-dollar-symbol`
+
+Replaces the default Woocommerce USD symbol with `U$`, used in Uruguayan e-commerces.
+
 ## Goals
 
 * Refactor legacy PHP code.
