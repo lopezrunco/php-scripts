@@ -8,6 +8,16 @@ This repository serves as a personal portfolio and learning project. Each script
 
 Rather than simply publishing old code, the goal is to analyze it from an Application Security perspective, identify potential weaknesses, and implement modern, secure alternatives.
 
+## Scripts
+
+1. `woocommerce-wapp-ask-price-snippet`
+
+Adds a "Ask price" link on individual product pages and catalog listings. Run it with the Code Snippets WordPress plugin.
+
+2. `wordpress-wapp-contact-btn-snippet`
+
+Adds a fixed Whatsapp contact button in the bottom-right corner of every page. Phone number and message are configurable from the Wordpress admin. Run it with the Code Snippets WordPress plugin.
+
 ## Goals
 
 * Refactor legacy PHP code.
