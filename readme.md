@@ -12,7 +12,7 @@ Rather than simply publishing old code, the goal is to analyze it from an Applic
 
 1. `woocommerce-wapp-ask-price-snippet`
 
-Adds a "Ask price" link on individual product pages and catalog listings. Run it with the Code Snippets WordPress plugin.
+Adds a "Ask price" link on individual product pages and catalog listings. Phone number is configurable from the Wordpress admin. Run it with the Code Snippets WordPress plugin.
 
 2. `wordpress-wapp-contact-btn-snippet`
 

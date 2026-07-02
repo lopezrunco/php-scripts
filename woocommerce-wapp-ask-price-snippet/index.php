@@ -1,58 +1,112 @@
 <?php
 
+add_action('customize_register', 'wapp_price_link_customizer');
+function wapp_price_link_customizer($wp_customize)
+{
+
+  $wp_customize->add_section('wapp_price_link_section', [
+    'title'             => 'Botón de consulta de precio WhatsApp',
+    'priority'          => 201,
+  ]);
+
+  $wp_customize->add_setting('wapp_price_phone_number', [
+    'default'           => '59800000000',
+    'sanitize_callback' => 'sanitize_text_field',
+    'transport'         => 'refresh',
+  ]);
+  $wp_customize->add_control('wapp_price_phone_number', [
+    'label'             => 'Número de WhatsApp',
+    'section'           => 'wapp_price_link_section',
+    'type'              => 'text',
+  ]);
+}
+
 add_action('woocommerce_single_product_summary', 'add_wapp_btn_to_single_product_page', 99);
-function add_wapp_btn_to_single_product_page() {
-    render_wapp_price_link('single');
+function add_wapp_btn_to_single_product_page()
+{
+  render_wapp_price_link('single');
 }
 
 add_action('woocommerce_after_shop_loop_item', 'add_wapp_btn_to_catalog_pages', 20);
-function add_wapp_btn_to_catalog_pages() {
-    render_wapp_price_link('catalog');
+function add_wapp_btn_to_catalog_pages()
+{
+  render_wapp_price_link('catalog');
 }
 
-function render_wapp_price_link($context = 'single') {
-    global $product;                                                    // Pull the current active global instance array from Woocommerce. contains raw pricing data, naming, identifiers, etc.
+function render_wapp_price_link($context = 'single')
+{
+  global $product;                                                    // Pull the current active global instance array from Woocommerce. contains raw pricing data, naming, identifiers, etc.
 
-    if (!$product) { $product = wc_get_product(get_the_ID()); }         // Safety fallback logic.
-    if (!$product || !($product instanceof WC_Product)) { return; }     // If the page loading is not a product record, rececution safely stops. "instanceof WC_Product" veirifes the variable is specifically an instance of the WC_Product class before touching it.
+  if (!$product) {
+    $product = wc_get_product(get_the_ID());
+  }         // Safety fallback logic.
+  if (!$product || !($product instanceof WC_Product)) {
+    return;
+  }     // If the page loading is not a product record, rececution safely stops. "instanceof WC_Product" veirifes the variable is specifically an instance of the WC_Product class before touching it.
 
-    $phone_number    = '59898684543';
-    if (!preg_match('/^598\d{8}$/', $phone_number)) { return; }         // Regex validation on phone number (Now harcoded but in the future might be dynamic). Uruguay country code 598 + 8 subscriber digits = 11 digits total. 
+  $phone_number    = sanitize_text_field(get_theme_mod('wapp_price_phone_number', '59800000000'));
+  if (!preg_match('/^598\d{8}$/', $phone_number)) {
+    return;
+  }         // Regex validation on phone number (Now harcoded but in the future might be dynamic). Uruguay country code 598 + 8 subscriber digits = 11 digits total. 
 
-    $product_name    = sanitize_text_field($product->get_name());       // Strip tags, control chars and extra whitespace from DB values.
-    $product_url     = esc_url_raw(get_permalink($product->get_id()));  // esc_url_raw() validates/cleans the URL without encoding "&" and special chars needed in URLs.
-    if (empty($product_name) || empty($product_url)) { return; }        // Stop if sanitization wiped out either value (Prevents a broken or empty Wapp link from rendering).
+  $product_name    = sanitize_text_field($product->get_name());       // Strip tags, control chars and extra whitespace from DB values.
+  $product_url     = esc_url_raw(get_permalink($product->get_id()));  // esc_url_raw() validates/cleans the URL without encoding "&" and special chars needed in URLs.
+  if (empty($product_name) || empty($product_url)) {
+    return;
+  }        // Stop if sanitization wiped out either value (Prevents a broken or empty Wapp link from rendering).
 
-    $message         = sprintf("Hola. Quisiera consultar el precio de %s (%s)", $product_name, $product_url);
-    $encoded_message = rawurlencode($message);
-    $wapp_url        = "https://wa.me/{$phone_number}?text={$encoded_message}";
+  $message         = sprintf("Hola. Quisiera consultar el precio de %s (%s)", $product_name, $product_url);
+  $encoded_message = rawurlencode($message);
+  $wapp_url        = "https://wa.me/{$phone_number}?text={$encoded_message}";
 
-    $allowed_contexts = [
-        'single'    => 'wapp-single',
-        'catalog'   => 'wapp-catalog',
-    ];
-    $context_class = $allowed_contexts[$context] ?? '';                 // Unknown context gets empty string. Fails safe, renders without custom styles.
-    ?>
+  $allowed_contexts = [
+    'single'    => 'wapp-single',
+    'catalog'   => 'wapp-catalog',
+  ];
+  $context_class = $allowed_contexts[$context] ?? '';                 // Unknown context gets empty string. Fails safe, renders without custom styles.
+?>
 
-    <style>
-        .whatsapp-price-query                { clear: both; display: flex; width: 100%; }
-        .whatsapp-price-query.wapp-single    { margin: 2rem 0; }
-        .whatsapp-price-query.wapp-catalog   { margin: 1rem 0; justify-content: center; }
-        .whatsapp-price-query a              { display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; color: #25d366; font-weight: 700; }
-        .whatsapp-price-query a i            { font-size: 1.2rem; }
-    </style>
+  <style>
+    .whatsapp-price-query {
+      clear: both;
+      display: flex;
+      width: 100%;
+    }
 
-    <div class="whatsapp-price-query <?php echo esc_attr($context_class); ?>">
-        <a 
-            href="<?php echo esc_url($wapp_url); ?>" 
-            target="_blank" 
-            rel="nofollow noopener noreferrer" 
-            aria-label="<?php echo esc_attr(sprintf('Consultar precio de %s por WhatsApp', esc_html($product_name))); ?>"
-            >
-                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>    
-                <span><?php esc_html_e('Consultar precio', 'the7mk2'); ?></span>
-        </a>
-    </div>
+    .whatsapp-price-query.wapp-single {
+      margin: 2rem 0;
+    }
 
-    <?php
+    .whatsapp-price-query.wapp-catalog {
+      margin: 1rem 0;
+      justify-content: center;
+    }
+
+    .whatsapp-price-query a {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      text-decoration: none;
+      color: #25d366;
+      font-weight: 700;
+    }
+
+    .whatsapp-price-query a i {
+      font-size: 1.2rem;
+    }
+  </style>
+
+  <div class="whatsapp-price-query <?php echo esc_attr($context_class); ?>">
+    <a
+      href="<?php echo esc_url($wapp_url); ?>"
+      target="_blank"
+      rel="nofollow noopener noreferrer"
+      aria-label="<?php echo esc_attr(sprintf('Consultar precio de %s por WhatsApp', esc_html($product_name))); ?>">
+      <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+      <span><?php esc_html_e('Consultar precio', 'the7mk2'); ?></span>
+    </a>
+  </div>
+
+<?php
 }
+
