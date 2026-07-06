@@ -22,6 +22,10 @@ Adds a fixed Whatsapp contact button in the bottom-right corner of every page. P
 
 Replaces the default Woocommerce USD symbol with `U$`, used in Uruguayan e-commerces.
 
+4. `drive-video-gallery`
+
+A password-protected video gallery built with pure PHP, designed to privately share a curated list of video links (e.g. embedded/external URLs) with a group via a single shared password. Includes secure session handling, CSRF-protected login, brute-force rate limiting with IP-based lockout, timing-attack mitigation, and security event logging. See the project's own README for setup instructions.
+
 ## Goals
 
 * Refactor legacy PHP code.
