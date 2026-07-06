@@ -1,0 +1,249 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+/* Colors */
+:root {
+  --white: #babbbe;
+  --red: #a8041f;
+  --mid-dark: #343434;
+  --low-dark: #2a2a2a;
+  --danger: rgba(115, 0, 19, 0.697);
+  --success: rgba(44, 115, 0, 0.697);
+  --warning: rgba(180, 168, 5, 0.697);
+}
+
+/* Spacing */
+:root {
+  --border-radius: 3px;
+}
+
+/* FX */
+:root {
+  --transition: all 0.25s ease-in-out;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+::selection {
+  background-color: var(--low-dark);
+}
+
+body {
+  background-color: var(--mid-dark);
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
+
+.content-wrap {
+  width: 98%;
+  max-width: 1180px;
+  height: 100vh;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  height: 90%;
+  max-width: 330px;
+  margin: 0 auto;
+  color: var(--white);
+  font-size: 1.3rem;
+}
+
+.login h3 {
+  font-weight: 400;
+}
+
+.login form {
+  width: 100%;
+}
+
+.login label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  width: 100%;
+}
+
+.login .input-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--white);
+}
+
+.login .input-group input.password-input {
+  width: 90%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: var(--white);
+  padding: 0.5rem 0;
+}
+
+.login .input-group i {
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.login .input-group i:hover {
+  opacity: .6;
+}
+
+.login .login-error {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--danger);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+}
+
+.login .login-error i {
+  font-size: 2rem;
+}
+
+button {
+  border: none;
+  outline: none;
+  margin: 1rem 0;
+  padding: 8px 35px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  text-transform: uppercase;
+  border: 2px solid var(--red);
+  border-color: var(--red);
+  border-radius: var(--border-radius);
+  background-color: var(--red);
+  color: var(--white);
+  text-shadow: 0 1px rgb(0 0 0 / 15%);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+}
+
+button:hover {
+  background-color: transparent;
+  border-color: var(--white);
+  color: var(--white);
+}
+
+h2.title {
+  text-align: center;
+  color: var(--white);
+  margin-bottom: 3rem;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem 0.9rem;
+  margin: 1rem 0;
+}
+
+.video-grid .item a:visited {
+  border-color: #474747;
+  color: #626262;
+}
+
+.video-grid .item a p {
+  font-size: 0.9rem;
+}
+
+.video-grid a.video-link-element {
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--white);
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.play-icon {
+  height: 3rem;
+  width: 3rem;
+  margin-top: -2rem;
+  transform: translateX(1rem);
+  color: var(--red);
+}
+
+.video-grid a.video-link-element i {
+  font-size: 3rem;
+  display: none;
+}
+
+.home-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem;
+}
+
+.home-link a {
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
+  align-items: center;
+  color: var(--white);
+  text-decoration: none;
+  
+}
+
+.home-link .separator {
+  width: 2rem;
+  height: 0.1rem;
+  background-color: var(--white);
+}
+
+@media screen and (min-width: 768px) {
+  .video-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .video-grid iframe {
+    height: 180px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .video-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .video-grid .item a,
+  .video-grid .item img {
+    transition: var(--transition);
+  }
+
+  .video-grid .item a:hover {
+    background-color: #2c2c2c;
+  }
+
+  .video-grid .item:hover img {
+    transform: translateX(3rem);
+  }
+}
