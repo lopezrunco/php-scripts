@@ -30,6 +30,11 @@ A password-protected video gallery built with pure PHP, designed to privately sh
 
 Converts WooCommerce from transactional to showcase-only mode removing prices, Add to Cart, cart/checkout access, stock display, order emails and redirecting my-account page.
 
+6. `woocommerce-restrict-shop-manager-capabilities`
+
+WooCommerce grants Shop Manager role unintended access to theme settings by default. This snippet removes that access.
+Removes: edit_theme_options and switch_themes.
+
 ## Goals
 
 * Refactor legacy PHP code.
