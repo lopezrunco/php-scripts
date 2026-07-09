@@ -28,7 +28,7 @@ A password-protected video gallery built with pure PHP, designed to privately sh
 
 5. `woocommerce-config-catalog-mode`
 
-Converts WooCommerce from transactional to showcase-only mode removing prices, Add to Cart, cart/checkout access, stock display, order emails.
+Converts WooCommerce from transactional to showcase-only mode removing prices, Add to Cart, cart/checkout access, stock display, order emails and redirecting my-account page.
 
 ## Goals
 

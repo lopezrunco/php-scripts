@@ -4,7 +4,7 @@
  * WooCommerce Catalog Mode
  * 
  * Converts WooCommerce from transactional to showcase-only mode.
- * Removes: prices, Add to Cart, cart/checkout access, stock display, order emails.
+ * Removes: prices, Add to Cart, cart/checkout access, stock display, order emails and redirects myaccount page for non-loggedin visitors.
  * Replaces with: WhatsApp price inquiry button (see whatsapp-price-query.php)
  * 
  * Deployed via: Code Snippets plugin
@@ -36,3 +36,11 @@ add_filter('woocommerce_email_enabled_customer_invoice', '__return_false');
 // Remove stock display
 remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40);
 add_filter('woocommerce_get_availability', '__return_empty_array');
+
+// Redirect My Account page to homepage for non-logged-in visitors
+add_action('template_redirect', function () {
+  if (is_account_page() && !is_user_logged_in()) {
+    wp_redirect(home_url());
+    exit;
+  }
+});
