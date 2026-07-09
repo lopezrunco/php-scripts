@@ -26,6 +26,10 @@ Replaces the default Woocommerce USD symbol with `U$`, used in Uruguayan e-comme
 
 A password-protected video gallery built with pure PHP, designed to privately share a curated list of video links (e.g. embedded/external URLs) with a group via a single shared password. Includes secure session handling, CSRF-protected login, brute-force rate limiting with IP-based lockout, timing-attack mitigation, and security event logging. See the project's own README for setup instructions.
 
+5. `woocommerce-config-catalog-mode`
+
+Converts WooCommerce from transactional to showcase-only mode removing prices, Add to Cart, cart/checkout access, stock display, order emails.
+
 ## Goals
 
 * Refactor legacy PHP code.
